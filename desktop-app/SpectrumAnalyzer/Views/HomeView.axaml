@@ -1,0 +1,77 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SpectrumAnalyzer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="SpectrumAnalyzer.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="35">
+
+        <TextBlock FontSize="56" FontWeight="Black"
+                   HorizontalAlignment="Center" LetterSpacing="2">
+            <TextBlock.Text>AcoustiCore</TextBlock.Text>
+
+            <TextBlock.Foreground>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#00f2fe" Offset="0.0" />
+                    <GradientStop Color="#FFFFFF" Offset="1.0" />
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+
+            <TextBlock.Effect>
+                <DropShadowEffect Color="#00f2fe" BlurRadius="20" OffsetX="0" OffsetY="0" Opacity="0.6"/>
+            </TextBlock.Effect>
+        </TextBlock>
+
+        <Border Background="#1A1A1A" BorderBrush="#333333" BorderThickness="1"
+                CornerRadius="12" Padding="40" Width="450"
+                BoxShadow="0 0 30 0 #204facfe">
+            <StackPanel Spacing="20">
+
+                <TextBlock Text="Select an audio file (.wav/.mp3) or start live analysis"
+                           HorizontalAlignment="Center" Foreground="#A0A0A0" FontSize="14"/>
+
+                <TextBlock Text="{Binding FileName}"
+                           HorizontalAlignment="Center" TextAlignment="Center"
+                           FontWeight="Bold" FontSize="18" Foreground="#00f2fe"
+                           TextWrapping="Wrap"/>
+
+                <Button Content="{Binding SelectButtonText}"
+                        Command="{Binding OpenFileCommand}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Background="#2A2A2A" Foreground="White"
+                        BorderBrush="#4facfe" BorderThickness="1"
+                        FontSize="16" FontWeight="SemiBold"
+                        Padding="10,12" CornerRadius="8"/>
+
+                <Button Content="Analyze File"
+                        Command="{Binding AnalyzeCommand}"
+                        IsVisible="{Binding IsFileSelected}"
+                        Background="#4facfe" Foreground="#121212"
+                        FontSize="16" FontWeight="Bold"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="10,12" CornerRadius="8"/>
+    
+                        <Button Content="Live Analysis"
+                        Command="{Binding StartLiveCommand}"
+                        Background="Transparent" Foreground="#00f2fe"
+                        BorderBrush="#00f2fe" BorderThickness="1"
+                        FontSize="16" FontWeight="SemiBold"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="10,12" CornerRadius="8"
+                        Margin="0,15,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Foreground="#ff5555"
+                   HorizontalAlignment="Center"
+                   FontSize="14" FontWeight="Bold"/>
+
+    </StackPanel>
+</UserControl>

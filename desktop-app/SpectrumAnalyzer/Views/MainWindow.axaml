@@ -1,0 +1,79 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SpectrumAnalyzer.ViewModels"
+        xmlns:views="using:SpectrumAnalyzer.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="SpectrumAnalyzer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AcoustiCore"
+        Background="#121212"> <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <SplitView IsPaneOpen="{Binding IsMenuOpen, Mode=TwoWay}"
+               DisplayMode="CompactOverlay"
+               OpenPaneLength="220"
+               CompactPaneLength="0">
+        
+        <SplitView.Pane>
+            <Border Background="#181818" Padding="0,20,0,0">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Menu" Foreground="#A0A0A0" FontSize="16" FontWeight="SemiBold" Margin="20,0,20,20"/>
+        
+                    <Button Content="Home" 
+                        Command="{Binding GoToHomeCommand}" 
+                        HorizontalAlignment="Stretch" 
+                        Background="Transparent" Foreground="White" FontSize="16"
+                        Margin="10,0" CornerRadius="6" Padding="15,10"/>
+
+                    <Button Content="Audio Analysis" 
+                        Command="{Binding GoToAnalysisCommand}" 
+                        HorizontalAlignment="Stretch" 
+                        Background="Transparent" Foreground="White" FontSize="16"
+                        Margin="10,0" CornerRadius="6" Padding="15,10"/>
+                </StackPanel>
+            </Border>
+        </SplitView.Pane>
+
+        <SplitView.Content>
+            <Grid RowDefinitions="Auto, *">
+                
+                <Grid Grid.Row="0" ColumnDefinitions="Auto, *" Margin="15">
+                    <Button Grid.Column="0" Content="☰"
+                            Command="{Binding ToggleMenuCommand}"
+                            FontSize="22" Foreground="White" Background="Transparent"
+                            CornerRadius="6" Padding="10,5"/>
+                    
+                    </Grid>
+
+                <TransitioningContentControl Grid.Row="1" Content="{Binding CurrentPage}">
+                    <TransitioningContentControl.PageTransition>
+                        <CrossFade Duration="0:00:00.300" />
+                    </TransitioningContentControl.PageTransition>
+
+                    <TransitioningContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}">
+                                <ContentControl.DataTemplates>
+                                    
+                                    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                                        <views:HomeView/>
+                                    </DataTemplate>
+                                    
+                                    <DataTemplate DataType="{x:Type vm:AnalysisViewModel}">
+                                        <views:AnalysisView/>
+                                    </DataTemplate>
+
+                                </ContentControl.DataTemplates>
+                            </ContentControl>
+                        </DataTemplate>
+                    </TransitioningContentControl.ContentTemplate>
+                </TransitioningContentControl>
+
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
+</Window>
